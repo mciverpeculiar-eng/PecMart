@@ -1,1 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PecMart - Online Store</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f5f5;
+  color:#111;
+}
+
+header{
+  background:#111;
+  color:white;
+  padding:15px 5%;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.nav{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  font-size:27px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.logo span{
+  color:#f5b400;
+}
+
+.search{
+  flex:1;
+  padding:12px;
+  border:0;
+  border-radius:8px;
+  font-size:15px;
+}
+
+.cart{
+  background:#f5b400;
+  border:0;
+  padding:12px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.hero{
+  background:linear-gradient(120deg,#111,#333);
+  color:white;
+  text-align:center;
+  padding:70px 20px;
+}
+
+.hero h1{
+  font-size:45px;
+  margin-bottom:15px;
+}
+
+.hero p{
+  font-size:18px;
+  color:#ddd;
+  margin-bottom:25px;
+}
+
+.shop-btn{
+  display:inline-block;
+  background:#f5b400;
+  color:#111;
+  text-decoration:none;
+  padding:14px 25px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:45px 20px;
+}
+
+h2{
+  font-size:30px;
+  margin-bottom:25px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:25px;
+}
+
+.card{
+  background:white;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 3px 15px #0002;
+}
+
+.card img{
+  width:100%;
+  height:380px;
+  object-fit:cover;
+  display:block;
+}
+
+.info{
+  padding:20px;
+}
+
+.info h3{
+  font-size:21px;
+  margin-bottom:10px;
+}
+
+.price{
+  font-size:24px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.details{
+  color:#666;
+  margin:10px 0 18px;
+}
+
+.add{
+  width:100%;
+  padding:14px;
+  background:#111;
+  color:white;
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.add:hover{
+  background:#333;
+}
+
+#checkout{
+  display:none;
+  max-width:600px;
+  margin:20px auto;
+  padding:25px;
+  background:white;
+  border-radius:14px;
+  box-shadow:0 3px 15px #0002;
+}
+
+#checkout input{
+  width:100%;
+  padding:13px;
+  margin:6px 0;
+  border:1px solid #ddd;
+  border-radius:7px;
+}
+
+.payment{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border:0;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.paystack{
+  background:#087f5b;
+  color:white;
+}
+
+.bank{
+  background:#111;
+  color:white;
+}
+
+.about{
+  background:#111;
+  color:white;
+  max-width:none;
+}
+
+.about-inner{
+  max-width:1100px;
+  margin:auto;
+  padding:45px 20px;
+}
+
+.about p{
+  color:#ccc;
+  line-height:1.7;
+}
+
+footer{
+  background:#080808;
+  color:#aaa;
+  text-align:center;
+  padding:25px;
+}
+
+@media(max-width:700px){
+  .nav{
+    flex-wrap:wrap;
+  }
+
+  .search{
+    order:3;
+    flex-basis:100%;
+  }
+
+  .products{
+    grid-template-columns:1fr;
+  }
+
+  .card img{
+    height:330px;
+  }
+
+  .hero h1{
+    font-size:36px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+
+<div class="logo">
+Pec<span>Mart</span>
+</div>
+
+<input
+class="search"
+id="search"
+placeholder="Search products..."
+oninput="searchProducts()">
+
+<button class="cart" onclick="showCheckout()">
+🛒 Cart (<span id="count">0</span>)
+</button>
+
+</div>
+</header>
+
+<div class="hero">
+
+<h1>Welcome to PecMart</h1>
+
+<p>
+Quality products. Great style. Great value.
+</p>
+
+<a href="#products" class="shop-btn">
+Shop Now
+</a>
+
+</div>
+
+<section id="products">
+
+<h2>Featured Shoes</h2>
+
+<div class="products">
+
+<div class="card" data-name="Quality Black Loafer">
+
+<img src="shoe-1.jpg" alt="Quality Black Loafer">
+
+<div class="info">
+
+<h3>Quality Black Loafer</h3>
+
+<div class="price">
+₦40,000
+</div>
+
+<div class="details">
+Quality footwear<br>
+Available sizes: 36 - 44
+</div>
+
+<button
+class="add"
+onclick="addToCart('Quality Black Loafer',40000)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+
+<div class="card" data-name="Black Pattern Loafer">
+
+<img src="shoe-2.jpg" alt="Black Pattern Loafer">
+
+<div class="info">
+
+<h3>Black Pattern Loafer</h3>
+
+<div class="price">
+₦40,000
+</div>
+
+<div class="details">
+Quality footwear<br>
+Available sizes: 36 - 44
+</div>
+
+<button
+class="add"
+onclick="addToCart('Black Pattern Loafer',40000)">
+Add to Cart
+</button>
+
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+<div id="checkout">
+
+<h2>Checkout</h2>
+
+<p style="color:#666;margin-bottom:15px;">
+Enter your details to place your order.
+</p>
+
+<input
+id="customerName"
+placeholder="Full name">
+
+<input
+id="customerPhone"
+placeholder="Phone number">
+
+<input
+id="customerEmail"
+type="email"
+placeholder="Email address">
+
+<input
+id="customerAddress"
+placeholder="Delivery address">
+
+<h3 style="margin-top:20px;">
+Order Total: ₦<span id="total">0</span>
+</h3>
+
+<button
+class="payment paystack"
+onclick="payWithPaystack()">
+💳 Pay with Paystack
+</button>
+
+<button
+class="payment bank"
+onclick="bankTransfer()">
+🏦 Bank Transfer
+</button>
+
+</div>
+
+
+<div class="about">
+
+<div class="about-inner">
+
+<h2>About PecMart</h2>
+
+<p>
+PecMart is an online store offering quality products
+at affordable prices. Browse our products, select
+what you want and place your order easily.
+</p>
+
+</div>
+
+</div>
+
+
+<footer>
+© 2026 PecMart. All rights reserved.
+</footer>
+
+
+<script>
+
+let cart = [];
+let total = 0;
+
+
+function addToCart(name, price){
+
+cart.push({
+name:name,
+price:price
+});
+
+total += price;
+
+document.getElementById("count").textContent = cart.length;
+
+alert(name + " has been added to your cart!");
+
+}
+
+
+function showCheckout(){
+
+if(cart.length === 0){
+
+alert("Your cart is empty. Please add a product first.");
+
+return;
+
+}
+
+document.getElementById("checkout").style.display = "block";
+
+document.getElementById("total").textContent =
+total.toLocaleString();
+
+document.getElementById("checkout")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+function searchProducts(){
+
+let search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+document
+.querySelectorAll(".card")
+.forEach(function(card){
+
+let name =
+card.dataset.name.toLowerCase();
+
+if(name.includes(search)){
+
+card.style.display = "block";
+
+}else{
+
+card.style.display = "none";
+
+}
+
+});
+
+}
+
+
+function payWithPaystack(){
+
+if(cart.length === 0){
+
+alert("Please add a product to your cart first.");
+
+return;
+
+}
+
+let name =
+document.getElementById("customerName").value.trim();
+
+let phone =
+document.getElementById("customerPhone").value.trim();
+
+let email =
+document.getElementById("customerEmail").value.trim();
+
+let address =
+document.getElementById("customerAddress").value.trim();
+
+
+if(!name || !phone || !email || !address){
+
+alert(
+"Please fill in your name, phone number, email and delivery address."
+);
+
+return;
+
+}
+
+
+alert(
+"PecMart Paystack payment is ready to be connected. A Paystack public key is required before customers can make live payments."
+);
+
+}
+
+
+function bankTransfer(){
+
+if(cart.length === 0){
+
+alert("Please add a product to your cart first.");
+
+return;
+
+}
+
+alert(
+"Bank transfer payment selected. The store owner's bank account details will be displayed here once they are added."
+);
+
+}
+
+</script>
+
+</body>
+  </html>
